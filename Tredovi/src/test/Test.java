@@ -1,6 +1,9 @@
 package test;
+
 import java.util.Scanner;
 import javax.swing.JTextArea;
+
+import gui.ThreadsGUI;
 import music.Performance;
 import music.Singer;
 import music.Synchronizer;
@@ -14,19 +17,16 @@ public class Test {
 	private Singer bruceSpringsteen;
 	private Singer guitarSolo;
 	
-	//public static ThreadsGUI tg;
-
 	private void initializeSingingThreads(JTextArea ta) {
 		String lyrics1 = "Because the night";
 		String lyrics2 = "Belongs to lovers";
-		String solo = "  xxx  x   x  x  xxxxx  xx    xxx\n"
-					+ " x     x   x  x    x   x  x  x   x\n"
-					+ "x      x   x  x    x   x  x  x   x\n"
-					+ "x      x   x  x    x   xxxx  xxxx\n"
-					+ "x  xx  x   x  x    x   x  x  x x\n"
-					+ " x  x  x   x  x    x   x  x  x  x\n"
-					+ "  xxx   xxx   x    x   x  x  x   x";
-
+		String solo = "  x x        x      x    x    xxxxx    x x x       x x x\r\n" + 
+				" x            x      x    x       x      x       x     x      x\r\n" + 
+				"x             x      x    x       x      x        x    x      x\r\n" + 
+				"x             x      x    x       x      x        x    x x x\r\n" + 
+				"x     x x    x      x    x       x      xxxxxxx    x   x\r\n" + 
+				" x       x    x      x    x       x      x        x    x     x\r\n" + 
+				"  x x x        x x x     x       x      x        x    x      x";
 		boolean stopIt = false;
 		Synchronizer synch = new Synchronizer(true, false, false, ta);
 
@@ -45,19 +45,12 @@ public class Test {
 		pattiSmith.start();
 		bruceSpringsteen.start();
 		guitarSolo.start();
+	}
+	
+	public synchronized void stopSingingThreads(){
 
-		IN.nextLine();
 		pattiSmith.setStopIt(true);
 		bruceSpringsteen.setStopIt(true);
 		guitarSolo.setStopIt(true);
-	}
-	
-	public void funkcija(JTextArea ta) {
-		funkcija2(ta);
-	}
-	
-	public void funkcija2(JTextArea ta) {
-		Synchronizer synch = new Synchronizer(false, false, false, ta);
-		synch.funkcija1223();
 	}
 }

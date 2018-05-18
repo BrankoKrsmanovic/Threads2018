@@ -55,7 +55,8 @@ public class Synchronizer {
 
 	private void sing(String lyrics, int delay) {
 		//System.out.println(lyrics);
-		ta.setText(lyrics);
+		ta.append(lyrics + "\n");
+		
 		try {
 			wait(delay);
 		} catch (InterruptedException e) {
@@ -78,10 +79,5 @@ public class Synchronizer {
 			}
 		}
 		notifyAll();
-	}
-
-
-	public void funkcija1223() {
-		ta.setText("qretyuuk");
 	}
 }

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import main.Main;
 import test.Test;
 
 import javax.swing.JButton;
@@ -28,23 +29,11 @@ public class ThreadsGUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ThreadsGUI tg = new ThreadsGUI();
-					tg.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public ThreadsGUI() {
-		setResizable(false);
 		setTitle("ThreadsGUI");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -70,8 +59,7 @@ public class ThreadsGUI extends JFrame {
 			btnPlay.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					btnPlay.setEnabled(false);
-					t.funkcija(getTextArea());
-					//t.testSingInThreads(getTextArea());
+					Main.testSingingThreads();
 				}
 			});
 		}
@@ -80,6 +68,12 @@ public class ThreadsGUI extends JFrame {
 	private JButton getBtnPause() {
 		if (btnPause == null) {
 			btnPause = new JButton("Pause");
+			btnPause.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				Main.stopSingingThreads();
+				btnPlay.setEnabled(true);
+				}
+			});
 		}
 		return btnPause;
 	}
@@ -90,7 +84,7 @@ public class ThreadsGUI extends JFrame {
 		}
 		return scrollPane;
 	}
-	private JTextArea getTextArea() {
+	public JTextArea getTextArea() {
 		if (textArea == null) {
 			textArea = new JTextArea();
 		}
