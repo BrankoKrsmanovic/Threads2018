@@ -23,12 +23,28 @@ public class Main {
 			}
 		});
 	}
-	
+
 	public static void testSingingThreads() {
 		test.testSingInThreads(tg.getTextArea());
 	}
 
 	public static void stopSingingThreads() {
 		test.stopSingingThreads();
+	}
+
+	public static void startSpecificThread(int e) {
+		test.startSpecificThread(e, tg.getTextArea());
+	}
+	
+	public static void stopFirstThread() {
+		test.stopFirstThread();
+	}
+	
+	public static void stopSecondThread() {
+		test.stopSecondThread();
+	}
+	
+	public static void stopThirdThread() {
+		test.stopThirdThread();
 	}
 }

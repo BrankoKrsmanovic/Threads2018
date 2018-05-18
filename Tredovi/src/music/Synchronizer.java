@@ -8,13 +8,15 @@ public class Synchronizer {
 	private boolean secondVoiceFlag;
 	private boolean soloFlag;
 	private JTextArea ta;
-	
-	public Synchronizer(boolean firstVoiceFlag, boolean secondVoiceFlag, boolean soloFlag, JTextArea ta) {
+	private int mode;
+
+	public Synchronizer(boolean firstVoiceFlag, boolean secondVoiceFlag, boolean soloFlag, JTextArea ta, int mode) {
 		super();
 		this.firstVoiceFlag = firstVoiceFlag;
 		this.secondVoiceFlag = secondVoiceFlag;
 		this.soloFlag = soloFlag;
 		this.ta = ta;
+		this.mode = mode;
 	}
 
 	public synchronized void singFirstVoice(String lyrics, int delay) {
@@ -54,30 +56,50 @@ public class Synchronizer {
 	}
 
 	private void sing(String lyrics, int delay) {
-		//System.out.println(lyrics);
+		// System.out.println(lyrics);
 		ta.append(lyrics + "\n");
-		
+
 		try {
 			wait(delay);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (firstVoiceFlag) {
-			firstVoiceFlag = false;
-			secondVoiceFlag = true;
-			soloFlag = false;
-		} else {
-			if (secondVoiceFlag) {
+		if (mode == 4) {
+			if (firstVoiceFlag) {
 				firstVoiceFlag = false;
-				secondVoiceFlag = false;
-				soloFlag = true;
-			} else if (soloFlag) {
+				secondVoiceFlag = true;
+				soloFlag = false;
+			} else {
+				if (secondVoiceFlag) {
+					firstVoiceFlag = false;
+					secondVoiceFlag = false;
+					soloFlag = true;
+				} else if (soloFlag) {
+					firstVoiceFlag = true;
+					secondVoiceFlag = false;
+					soloFlag = false;
+				}
+			}
+			notifyAll();
+		} else {
+			if (mode == 1) {
 				firstVoiceFlag = true;
 				secondVoiceFlag = false;
 				soloFlag = false;
+				notifyAll();
+			} else if (mode == 2) {
+				firstVoiceFlag = false;
+				secondVoiceFlag = true;
+				soloFlag = false;
+				notifyAll();
+			} else if (mode == 3) {
+				firstVoiceFlag = false;
+				secondVoiceFlag = false;
+				soloFlag = true;
+				notifyAll();
 			}
 		}
-		notifyAll();
+
 	}
 }
